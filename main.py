@@ -8,15 +8,15 @@ from selenium.webdriver.support import expected_conditions as EC
 
 import pytest
 
+@pytest.fixture
+def browser():
+    driver = webdriver.Firefox()
+    yield driver 
+    driver.quit()
 
-class SeleniumSampleTests: #classes are useful for organizing test functions, best practice
-    @pytest.fixture
-    def browser():
-        driver = webdriver.Firefox()
-        yield driver 
-        driver.quit()
-    
-    def test_google_search(browser):
+class TestSamples: 
+    #classes are useful for organizing test functions, best practicue, make sure to use SELF in all in all function arguments to ensure the tests are collected.
+    def test_google_search(self, browser):
         try:
             browser.get("https://www.google.com")
     
@@ -31,7 +31,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
         except Exception as e:
             pytest.fail(f"error: {e}")
     
-    def test_click_button(browser):
+    def test_click_button(self, browser):
         try:
             browser.get("https://uitestingplayground.com/click")
             
@@ -46,7 +46,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
         except Exception as e:
             pytest.fail(f"error: {e}")
     
-    def test_text_input(browser):
+    def test_text_input(self, browser):
         try:
             browser.get("https://uitestingplayground.com/textinput")
     
@@ -72,7 +72,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
             pytest.fail(f"error: {e}")
     
     @pytest.mark.skip(reason="takes too fuckin long")
-    def test_client_side_delay(browser):
+    def test_client_side_delay(self, browser):
         try:    
             browser.get("https://uitestingplayground.com/clientdelay")
     
@@ -95,7 +95,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
         except Exception as e:
             pytest.fail(f"error: {e}")
     
-    def test_dynamic_id(browser):
+    def test_dynamic_id(self, browser):
         try:
             browser.get("https://uitestingplayground.com/dynamicid")
             button = browser.find_element(By.CLASS_NAME, "btn-primary")
@@ -133,7 +133,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
         except Exception as e:
             pytest.fail(f"error: {e}")
     
-    def test_visibility(browser):
+    def test_visibility(self, browser):
         try:
             browser.get("https://uitestingplayground.com/visibility")
     
@@ -155,7 +155,7 @@ class SeleniumSampleTests: #classes are useful for organizing test functions, be
             print(f"error{e}")
     
     
-    def test_class_attribute(browser):
+    def test_class_attribute(self, browser):
         try:
             browser.get("https://uitestingplayground.com/classattr")
             blue_button = browser\
