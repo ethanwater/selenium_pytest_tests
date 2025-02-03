@@ -172,3 +172,36 @@ class TestSamples:
             alert.accept()
         except Exception as e:
             pytest.fail(f"error: {e}")
+
+    def test_animated_button(self, browser):
+        try:
+            browser.get("https://uitestingplayground.com/animation")
+            animation_button = browser.find_element(By.ID, "animationButton")
+            moving_button = browser.find_element(By.ID, "movingTarget")
+            status = browser.find_element(By.ID, "opstatus")
+
+            actions = ActionChains(browser)\
+                .move_to_element(animation_button)\
+                .click()\
+                .perform()
+
+            while True:
+                time.sleep(1)
+                if moving_button.get_attribute("class") == "btn btn-primary":
+                    break
+            
+            moving_button.click()
+            assert "btn btn-primary" in status.text, pytest.fail("invalid status text") 
+
+        except Exception as e:
+            pytest.fail(f"error: {e}")
+
+            
+
+
+
+
+
+
+
+
